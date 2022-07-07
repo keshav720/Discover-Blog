@@ -47,8 +47,12 @@ app.use("/backend/users", userRoute);
 app.use("/backend/posts", postRoute);
 app.use("/backend/categories", categoryRoute);
 
+app.use(express.static(path.join(__dirname, "/frontend/build")));
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/frontend/build', 'index.html'));
+});
 
-app.listen(process.env.APP_PORT, () => {
+app.listen(process.env.APP_PORT || 5000, () => {
   console.log( `server is running on url http://localhost:${process.env.APP_PORT}`);
 });
